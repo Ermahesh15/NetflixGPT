@@ -3,7 +3,6 @@ import useBannerMovie from "../hooks/useBannerMovie";
 
 export default function HomepageBanner({ movie }) {
   const { title, overview, vote_average, id } = movie;
-
   useBannerMovie(id);
 
   const trailerKey = useSelector(

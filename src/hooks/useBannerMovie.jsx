@@ -8,19 +8,26 @@ export default function useBannerMovie(id) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    async function fetchMovie() {
+    async function fetchMovieTrailer() {
       try {
-        const response = await fetch(`${MoviesURL}/${id}/videos`, API_OPTIONS);
-        
+        const response = await fetch(
+          `${MoviesURL}/${id}/videos?language=en-US`,
+          API_OPTIONS,
+        );
+
         if (!response.ok) {
           throw new Error("Failed to fetch trailer videos");
         }
 
-        console.log(`${MoviesURL}/${id}/videos`);
-
         const data = await response.json();
 
-        const trailer = data.results.find((video) => video.type === "Trailer");
+        console.log(data);
+
+        // Prefer official trailer
+        const trailer =
+          data.results.find(
+            (video) => video.type === "Trailer" && video.site === "YouTube",
+          ) || data.results[0];
 
         if (trailer) {
           dispatch(addBannerMovieTrailerKey(trailer.key));
@@ -31,7 +38,7 @@ export default function useBannerMovie(id) {
     }
 
     if (id) {
-      fetchMovie();
+      fetchMovieTrailer();
     }
   }, [dispatch, id]);
 }

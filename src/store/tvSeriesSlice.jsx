@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const tvSeriesSlice = createSlice({
   name: "tvSeries",
   initialState: {
-    airingTodaySeries: null,
-    onTheAirSeries: null,
-    popularSeries: null,
-    topRatedSeries: null,
+    airingTodaySeries: [],
+    onTheAirSeries: [],
+    popularSeries: [],
+    topRatedSeries: [],
   },
 
   reducers: {

@@ -1,14 +1,18 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { addNowPlayingMovies } from "../store/movieSlice";
 import { API_OPTIONS, MoviesURL } from "../utils/constant";
 
 function useNowPlayingMovies() {
   const dispatch = useDispatch();
+  const nowPlayingMovies = useSelector((store) => store.movies.nowPlayingMovies);
   
   useEffect(() => {
     async function fetchMovies() {
+      if (nowPlayingMovies?.length > 0) {
+        return;
+      }
       try {
         const response = await fetch(
           `${MoviesURL}/now_playing?language=en-US&page=1`,
@@ -28,7 +32,7 @@ function useNowPlayingMovies() {
     }
 
     fetchMovies();
-  }, [dispatch]);
+  }, [dispatch, nowPlayingMovies]);
 }
 
 export default useNowPlayingMovies;

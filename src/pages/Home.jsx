@@ -13,8 +13,8 @@ export default function Home() {
   useUpcomingMovies();
 
   const movies = useSelector((store) => store.movies.nowPlayingMovies);
-  if (!movies) return;
-  const mainMovie = movies[2];
+  if (movies.length === 0) return;
+  const mainMovie = movies[0];
   return (
     <>
       <HomepageBanner movie={mainMovie} />
